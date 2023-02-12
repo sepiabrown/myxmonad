@@ -54,6 +54,7 @@ in {
       dmenu
       arandr
       picom
+      autorandr
     ];
 
     services.random-background = {

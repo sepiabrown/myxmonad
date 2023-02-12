@@ -247,8 +247,10 @@ scratchpads =
 myCenter :: W.RationalRect
 myCenter = W.RationalRect (4 / 32) (1 / 32) (24 / 32) (30 / 32)
 
+
 myFull :: W.RationalRect
 myFull = W.RationalRect (0 / 32) (0 / 32) (32 / 32) (32 / 32)
+
 
 myRight :: W.RationalRect
 myRight = W.RationalRect (33 / 64) (1 / 32) (15 / 32) (30 / 32)
@@ -333,14 +335,14 @@ myKeyBindings =
   , ("M-C-j", sendMessage MirrorShrink) -- Shrink vert window width
   , ("M-C-k", sendMessage MirrorExpand) -- Exoand vert window width
   , -- Floating Window resizing
-    ("M-S-i", withFocused $ keysResizeWindow (0, 9) (0, 1))
-  , ("M-S-u", withFocused $ keysResizeWindow (0, 9) (0, 0))
-  , ("M-S-o", withFocused $ keysResizeWindow (16, 0) (0, 0))
-  , ("M-S-y", withFocused $ keysResizeWindow (16, 0) (1, 0))
-  , ("M-C-i", withFocused $ keysResizeWindow (0, -9) (0, 1))
-  , ("M-C-u", withFocused $ keysResizeWindow (0, -9) (0, 0))
-  , ("M-C-o", withFocused $ keysResizeWindow (-16, 0) (0, 0))
-  , ("M-C-y", withFocused $ keysResizeWindow (-16, 0) (1, 0))
+    ("M-S-u", withFocused $ keysResizeWindow (0, 9) (0, 0)) -- enlarge down
+  , ("M-S-i", withFocused $ keysResizeWindow (0, -9) (0, 0)) -- shrink down
+  , ("M-S-y", withFocused $ keysResizeWindow (16, 0) (1, 0)) -- enlarge left
+  , ("M-S-o", withFocused $ keysResizeWindow (-16, 0) (1, 0)) -- shrink left
+  , ("M-C-u", withFocused $ keysResizeWindow (0, -9) (0, 1)) -- shrink up
+  , ("M-C-i", withFocused $ keysResizeWindow (0, 9) (0, 1)) -- enlarge up
+  , ("M-C-y", withFocused $ keysResizeWindow (-16, 0) (0, 0)) -- shrink right
+  , ("M-C-o", withFocused $ keysResizeWindow (16, 0) (0, 0)) -- enlarge right
   , -- Floating Window moving
     ("M-i", withFocused $ keysMoveWindow (0, -9))
   , ("M-u", withFocused $ keysMoveWindow (0, 9))
@@ -368,7 +370,8 @@ myKeyBindings =
   , ("M-s", dynamicNSPAction "dyn2")
   , ("M-d", dynamicNSPAction "dyn3")
   , -- environment
-    ("M-M1-9", spawn "xbacklight -inc 5")
+    ("M-S-C-x", spawn "autorandr")
+  , ("M-M1-9", spawn "xbacklight -inc 5")
   , ("M-M1-8", spawn "xbacklight -dec 5")
   , -- Multimedia Keys
     ("<XF86AudioPlay>", spawn (myTerminal ++ " mocp --play"))
@@ -388,21 +391,13 @@ myKeyBindings =
   , ("<XF86Calculator>", runOrRaise "qalculate-gtk" (resource =? "qalculate-gtk"))
   , ("<XF86Eject>", spawn "toggleeject")
   , ("<Print>", spawn "scrotd 0")
-  , -- layout gap
-    ("M-g S-i", withFocused $ keysResizeWindow (0, 9) (0, 1))
-  , ("M-g S-u", withFocused $ keysResizeWindow (0, 9) (0, 0))
-  , ("M-g S-o", withFocused $ keysResizeWindow (16, 0) (0, 0))
-  , ("M-g S-y", withFocused $ keysResizeWindow (16, 0) (1, 0))
-  , ("M-g C-i", withFocused $ keysResizeWindow (0, -9) (0, 1))
-  , ("M-g C-u", withFocused $ keysResizeWindow (0, -9) (0, 0))
-  , ("M-g C-o", withFocused $ keysResizeWindow (-16, 0) (0, 0))
-  , ("M-g C-y", withFocused $ keysResizeWindow (-16, 0) (1, 0))
   ]
     -- screen view and shift
     ++ [ ("M-" ++ m ++ k, screenWorkspace sc >>= flip whenJust (windows . f))
        | (k, sc) <- zip ["q", "w", "e"] [0 ..]
        , (f, m) <- [(W.view, ""), (W.shift, "S-")]
        ]
+    -- layout gap
     ++ [ ("M-g " ++ f ++ " " ++ k, sendMessage $ m d)
        | (k, d) <- [("h", L), ("j", D), ("k", U), ("l", R)]
        , (f, m) <- [("v", ToggleGap), ("h", IncGap 10), ("f", DecGap 10)]
@@ -443,7 +438,7 @@ floatToRationalRect rr' w = do
         && rd wx wx' <= tol
         && rd wy wy' <= tol
       where
-        tol = 2 % 100
+        tol = 1 % 100
         rd a b = 2 * abs (a - b) / (a + b) -- relative difference
 
 
