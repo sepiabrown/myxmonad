@@ -278,10 +278,10 @@ myKeyBindings =
     -- ("M-q"       , spawn "restart-xmonad.sh")
     ("M-C-q", spawn "xmonad-restart")
   , ("M-C-S-q", io exitSuccess) -- Quits xmonad
-  , -- Launch programs
-    ("M-p", spawn myDmenu)
+  -- Launch programs
+  , ("M-p", spawn myDmenu)
   , ("M-S-p", spawn myRofi)
-  , -- ("M-s", spawn "dm-search.sh"),
+  , -- ("M-s", spawn "dm-search.sh")
     ("M-S-v", spawn "clipmenu")
   , ("M-C-c", spawn myCapture)
   , -- , ("M-o"                    , spawn "dmenu_run -i -p \"Run: \"")
@@ -292,11 +292,11 @@ myKeyBindings =
   , ("M-C-S-<Tab>", rotSlavesDown) -- Rotate all windows except master and keep focus in place
   , ("M-n", toggleFocus) -- Move focus to the lastly focused
   , ("M-S-n", swapWithLast) -- Move the focused to the lastly focused
-  , -- Kill windows
-    ("M-S-c", kill1) -- Kill the currently focused client
+  -- Kill windows
+  , ("M-S-c", kill1) -- Kill the currently focused client
   , ("M-C-S-c", killAll) -- Kill all windows on current workspace
-  , -- Workspaces
-    ("M-[", moveTo Prev anyWS) -- moveTo previous workspace
+  -- Workspaces
+  , ("M-[", moveTo Prev anyWS) -- moveTo previous workspace
   , ("M-]", moveTo Next anyWS) -- moveTo next workspace
   , ("M-`", toggleWS)
   , ("M-S-[", shiftTo Prev nonNSP >> moveTo Prev nonNSP) -- Shifts focused window to prev ws and move
@@ -305,16 +305,16 @@ myKeyBindings =
   , ("M-C-]", nextScreen) -- Switch focus to next monitor
   , ("M-C-S-[", shiftPrevScreen >> prevScreen) -- Shifts focused window to prev monitor and move
   , ("M-C-S-]", shiftNextScreen >> nextScreen) -- Shifts focused window to next monitor and move
-  , -- Floating windows
-    ("M-t", withFocused $ windows . W.sink) -- Push floating window back to tile
+  -- Floating windows
+  , ("M-t", withFocused $ windows . W.sink) -- Push floating window back to tile
   , ("M-S-t", sinkAll) -- Push ALL floating windows to tile
-  , -- Increase/decrease spacing (gaps)
-    ("M--", decWindowSpacing 1) -- Decrease window spacing
+  -- Increase/decrease spacing (gaps)
+  , ("M--", decWindowSpacing 1) -- Decrease window spacing
   , ("M-=", incWindowSpacing 1) -- Increase window spacing
   , ("M-S--", decScreenSpacing 1) -- Decrease screen spacing
   , ("M-S-=", incScreenSpacing 1) -- Increase screen spacing
-  , -- Layouts
-    ("M-<Space>", sendMessage NextLayout)
+  -- Layouts
+  , ("M-<Space>", sendMessage NextLayout)
   , ("M-r", sendMessage $ MT.Toggle MIRROR)
   , ("M-C-M1-<Up>", sendMessage Arrange)
   , ("M-C-M1-<Down>", sendMessage DeArrange)
@@ -329,22 +329,31 @@ myKeyBindings =
   , ("M-S-.", sendMessage (IncMasterN (-1))) -- Decrease number of clients in master pane
   , ("M-C-,", increaseLimit) -- Increase number of windows
   , ("M-C-.", decreaseLimit) -- Decrease number of windows
-  , -- Tiled Window resizing
-    ("M-C-h", sendMessage Shrink) -- Shrink horiz window width
+  -- Tiled Window resizing
+  , ("M-C-h", sendMessage Shrink) -- Shrink horiz window width
   , ("M-C-l", sendMessage Expand) -- Expand horiz window width
   , ("M-C-j", sendMessage MirrorShrink) -- Shrink vert window width
   , ("M-C-k", sendMessage MirrorExpand) -- Exoand vert window width
-  , -- Floating Window resizing
-    ("M-S-u", withFocused $ keysResizeWindow (0, 9) (0, 0)) -- enlarge down
-  , ("M-S-i", withFocused $ keysResizeWindow (0, -9) (0, 0)) -- shrink down
-  , ("M-S-y", withFocused $ keysResizeWindow (16, 0) (1, 0)) -- enlarge left
-  , ("M-S-o", withFocused $ keysResizeWindow (-16, 0) (1, 0)) -- shrink left
-  , ("M-C-u", withFocused $ keysResizeWindow (0, -9) (0, 1)) -- shrink up
-  , ("M-C-i", withFocused $ keysResizeWindow (0, 9) (0, 1)) -- enlarge up
-  , ("M-C-y", withFocused $ keysResizeWindow (-16, 0) (0, 0)) -- shrink right
-  , ("M-C-o", withFocused $ keysResizeWindow (16, 0) (0, 0)) -- enlarge right
-  , -- Floating Window moving
-    ("M-i", withFocused $ keysMoveWindow (0, -9))
+  -- Floating Window resizing
+  , ("M-S-u", withFocused $ keysResizeWindow (0, 10) (0, 0)) -- enlarge down
+  , ("M-S-i", withFocused $ keysResizeWindow (0, -10) (0, 0)) -- shrink down
+  , ("M-S-y", withFocused $ keysResizeWindow (-10, 0) (0, 0)) -- shrink right
+  , ("M-S-o", withFocused $ keysResizeWindow (10, 0) (0, 0)) -- enlarge right
+  , ("M-C-u", withFocused $ keysResizeWindow (0, -10) (0, 1)) -- shrink up
+  , ("M-C-i", withFocused $ keysResizeWindow (0, 10) (0, 1)) -- enlarge up
+  , ("M-C-y", withFocused $ keysResizeWindow (10, 0) (1, 0)) -- enlarge left
+  , ("M-C-o", withFocused $ keysResizeWindow (-10, 0) (1, 0)) -- shrink left
+  -- Changing Gaps
+  , ("M-S-C-u", sendMessage $ DecGap 10 D)
+  , ("M-S-C-i", sendMessage $ IncGap 10 D)
+  , ("M-S-C-o", sendMessage $ DecGap 10 R)
+  , ("M-S-C-y", sendMessage $ IncGap 10 R)
+  , ("M-M1-S-C-u", sendMessage $ IncGap 10 U)
+  , ("M-M1-S-C-i", sendMessage $ DecGap 10 U)
+  , ("M-M1-S-C-o", sendMessage $ IncGap 10 L)
+  , ("M-M1-S-C-y", sendMessage $ DecGap 10 L)
+  -- Floating Window moving
+  , ("M-i", withFocused $ keysMoveWindow (0, -9))
   , ("M-u", withFocused $ keysMoveWindow (0, 9))
   , ("M-o", withFocused $ keysMoveWindow (16, 0))
   , ("M-y", withFocused $ keysMoveWindow (-16, 0))
@@ -396,11 +405,6 @@ myKeyBindings =
     ++ [ ("M-" ++ m ++ k, screenWorkspace sc >>= flip whenJust (windows . f))
        | (k, sc) <- zip ["q", "w", "e"] [0 ..]
        , (f, m) <- [(W.view, ""), (W.shift, "S-")]
-       ]
-    -- layout gap
-    ++ [ ("M-g " ++ f ++ " " ++ k, sendMessage $ m d)
-       | (k, d) <- [("h", L), ("j", D), ("k", U), ("l", R)]
-       , (f, m) <- [("v", ToggleGap), ("h", IncGap 10), ("f", DecGap 10)]
        ]
   where
     -- The following lines are needed for named scratchpads.
