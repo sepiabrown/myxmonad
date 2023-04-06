@@ -81,6 +81,7 @@ import XMonad.StackSet qualified as W
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.NamedScratchpad (NamedScratchpad (..), customFloating, dynamicNSPAction, namedScratchpadAction, namedScratchpadManageHook, toggleDynamicNSP)
 import XMonad.Util.Run (safeSpawn, spawnPipe)
+import XMonad.Layout.GridVariants (Grid(Grid))
 
 
 main :: IO ()
@@ -182,6 +183,7 @@ myLayoutHook = avoidStruts $ mouseResize myDefaultLayout
   where
     myDefaultLayout =
       renamed [Replace "tall"] (mkToggleAll tall)
+        ||| renamed [Replace "grid"] (mkToggleAll grid)
         ||| renamed [Replace "monocle"] (mkToggleAll (noBorders monocle))
         ||| renamed [Replace "floats"] floats
     mkToggleAll l =
@@ -195,6 +197,7 @@ myLayoutHook = avoidStruts $ mouseResize myDefaultLayout
     tall = mkLayout $ ResizableTall 1 (3 / 100) (1 / 2) []
     floats = mkLayout simplestFloat
     monocle = mkLayout $ limitWindows 20 Full
+    grid = mkLayout $ Grid (16/10)
     mkLayout layout = windowNavigation $ mySpacing 6 layout
       where
         mySpacing :: Integer -> l a -> ModifiedLayout Spacing l a
