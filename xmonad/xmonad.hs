@@ -325,8 +325,9 @@ myKeyBindings =
   , ("M-S-f", sendMessage ToggleStruts)
   , ("M-C-f", sendMessage (T.Toggle "floats")) -- Toggles my 'floats' layout
   , ("M-C-1", sendMessage $ JumpToLayout "tall")
-  , ("M-C-2", sendMessage $ JumpToLayout "monocle")
-  , ("M-C-3", sendMessage $ JumpToLayout "floats")
+  , ("M-C-2", sendMessage $ JumpToLayout "grid")
+  , ("M-C-3", sendMessage $ JumpToLayout "monocle")
+  , ("M-C-4", sendMessage $ JumpToLayout "floats")
   , -- Increase/decrease windows in the master pane or the stack
     ("M-S-,", sendMessage (IncMasterN 1)) -- Increase number of clients in master pane
   , ("M-S-.", sendMessage (IncMasterN (-1))) -- Decrease number of clients in master pane
