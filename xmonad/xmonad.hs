@@ -356,6 +356,10 @@ myKeyBindings =
   , ("M-M1-S-C-i", sendMessage $ DecGap 10 U)
   , ("M-M1-S-C-o", sendMessage $ IncGap 10 L)
   , ("M-M1-S-C-y", sendMessage $ DecGap 10 L)
+  , ("M-g u", sendMessage $ ToggleGap D)
+  , ("M-g i", sendMessage $ ToggleGap U)
+  , ("M-g o", sendMessage $ ToggleGap R)
+  , ("M-g y", sendMessage $ ToggleGap L)
   -- Floating Window moving
   , ("M-i", withFocused $ keysMoveWindow (0, -9))
   , ("M-u", withFocused $ keysMoveWindow (0, 9))
