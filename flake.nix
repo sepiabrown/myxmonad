@@ -2,11 +2,9 @@
   description = "my xmonad configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    haedosa.url = "github:haedosa/flakes";
+    nixpkgs.follows = "haedosa/nixpkgs-23-05";
+    home-manager.follows = "haedosa/home-manager-23-05";
     wallpapers.url = "github:jjdosa/wallpapers";
     wallpapers.flake = false;
   };
