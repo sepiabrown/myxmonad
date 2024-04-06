@@ -3,8 +3,8 @@
 
   inputs = {
     haedosa.url = "github:haedosa/flakes";
-    nixpkgs.follows = "haedosa/nixpkgs-23-05";
-    home-manager.follows = "haedosa/home-manager-23-05";
+    nixpkgs.follows = "haedosa/nixpkgs-23-11";
+    home-manager.follows = "haedosa/home-manager-23-11";
     wallpapers.url = "github:jjdosa/wallpapers";
     wallpapers.flake = false;
   };
