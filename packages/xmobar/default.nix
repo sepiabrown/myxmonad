@@ -2,6 +2,6 @@
 substitute {
   src = ./xmobarrc;
   replacements = [
-    [ "--replace" "@iconRoot@" "${./xpm}" ]
+    [ "--replace" "xpm" "${./xpm}" ]
   ];
 }
