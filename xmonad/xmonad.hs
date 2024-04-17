@@ -138,9 +138,11 @@ myScreenLocker = "i3lock-fancy-rapid 10 pixel"
 
 
 myEditor :: String
-myEditor = "emacsclient -c -a 'emacs --fg-daemon'" -- Sets emacs as editor for tree select
+myEditor = "emacsclient -s doom -c -a 'emacs --with-profile doom --fg-daemon'" -- Sets emacs as editor for tree select
 -- myEditor = myTerminal ++ " -e vim "    -- Sets vim as editor for tree select
 
+myEditor2 :: String
+myEditor2 = "emacsclient -s snd -c -a 'emacs --with-profile doom --fg-daemon=snd'" -- Sets emacs as editor for tree select
 
 myCapture :: String
 myCapture = "DIR=~/Dropbox/captures; mkdir -p $DIR; flameshot gui -p $DIR"
@@ -236,9 +238,9 @@ data App
 scratchpads :: [NamedScratchpad]
 scratchpads =
   mkNS
-    <$> [ TitleApp "emacs" (customFloating myRightCenter) "emacsclient -s emacs -c -a 'emacs --title emacs --bg-daemon=emacs'"
+    <$> [ TitleApp "emacs" (customFloating myRightCenter) "emacsclient -s emacs -c -a 'emacs --with-profile doom --title emacs --bg-daemon=emacs'"
         , TitleApp "tmux" (customFloating myCenter) (myTerminal ++ " -t tmux -e tmux")
-        , TitleApp "htop" (customFloating myTopCenter) (myTerminal ++ " -t htop -e htop")
+        , TitleApp "btop" (customFloating myTopCenter) (myTerminal ++ " -t btop -e btop")
         , TitleApp "btm" (customFloating myRight) (myTerminal ++ " -t btm -e btm")
         ]
   where
@@ -279,7 +281,7 @@ myRightCenter = W.RationalRect (10 / 32) (1 / 32) (21 / 32) (30 / 32) -- px py w
 myKeyBindings =
   [ -- ("M-q"       , spawn "xmonad --recompile; xmonad --restart")
     -- ("M-q"       , spawn "restart-xmonad.sh")
-    ("M-C-q", spawn "xmonad-restart")
+    ("M-C-q"       , spawn "xmonad --recompile; xmonad --restart")
   , ("M-C-S-q", io exitSuccess) -- Quits xmonad
   -- Launch programs
   , ("M-p", spawn myDmenu)
@@ -377,7 +379,7 @@ myKeyBindings =
   , ("M-S-C-<Return>", spawn myBrowser)
   , -- Scratchpads
     ("M-C-a", namedScratchpadAction scratchpads "emacs")
-  , ("M-C-s", namedScratchpadAction scratchpads "htop")
+  , ("M-C-s", namedScratchpadAction scratchpads "btop")
   , ("M-C-d", namedScratchpadAction scratchpads "btm")
   , -- Dynamic Scratchpads
     ("M-S-a", withFocused $ toggleDynamicNSP "dyn1")
@@ -411,7 +413,7 @@ myKeyBindings =
   ]
     -- screen view and shift
     ++ [ ("M-" ++ m ++ k, screenWorkspace sc >>= flip whenJust (windows . f))
-       | (k, sc) <- zip ["q", "w", "e"] [0 ..]
+       | (k, sc) <- zip ["q", "w", "e"] [1, 0, 2]
        , (f, m) <- [(W.view, ""), (W.shift, "S-")]
        ]
   where
