@@ -53,7 +53,7 @@ in {
       xmobar
       dmenu
       arandr
-      picom
+      # picom
       autorandr
     ];
 

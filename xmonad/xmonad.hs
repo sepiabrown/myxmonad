@@ -42,7 +42,7 @@ import XMonad
   , (<+>)
   , (=?)
   )
-import XMonad.Actions.CopyWindow (kill1)
+import XMonad.Actions.CopyWindow (kill1, copyToAll, killAllOtherCopies)
 import XMonad.Actions.CycleWS (WSType (..), anyWS, moveTo, nextScreen, prevScreen, shiftNextScreen, shiftPrevScreen, shiftTo, toggleWS)
 import XMonad.Actions.FloatKeys (keysMoveWindow, keysResizeWindow)
 import XMonad.Actions.MouseResize (mouseResize)
@@ -138,7 +138,8 @@ myScreenLocker = "i3lock-fancy-rapid 10 pixel"
 
 
 myEditor :: String
-myEditor = "emacsclient -s doom -c -a 'emacs --with-profile doom --fg-daemon'" -- Sets emacs as editor for tree select
+myEditor = "emacsclient -c -a 'emacs --fg-daemon'" -- Sets emacs as editor for tree select
+-- myEditor = "emacsclient -s doom -c -a 'emacs --with-profile doom --fg-daemon'" -- Sets emacs as editor for tree select
 -- myEditor = myTerminal ++ " -e vim "    -- Sets vim as editor for tree select
 
 myEditor2 :: String
@@ -299,7 +300,9 @@ myKeyBindings =
   , ("M-S-n", swapWithLast) -- Move the focused to the lastly focused
   -- Kill windows
   , ("M-S-c", kill1) -- Kill the currently focused client
-  , ("M-C-S-c", killAll) -- Kill all windows on current workspace
+  , ("M-C-S-p", windows copyToAll) -- Kill the currently focused client
+  , ("M-C-S-c", killAllOtherCopies) -- Kill all other copies of focused window (if they're present). 'All other' means here 'copies which are not on the current workspace'.
+  -- , ("M-C-S-c", killAll) -- Kill all windows on current workspace
   -- Workspaces
   , ("M-[", moveTo Prev anyWS) -- moveTo previous workspace
   , ("M-]", moveTo Next anyWS) -- moveTo next workspace
