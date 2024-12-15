@@ -130,7 +130,7 @@ myTerminal = "alacritty" -- Sets default terminal
 
 
 myBrowser :: String
-myBrowser = "brave"
+myBrowser = "sh -c 'BROWSER=$(xdg-settings get default-web-browser); ${BROWSER%%.desktop}'"
 
 
 myScreenLocker :: String
