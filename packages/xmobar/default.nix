@@ -1,7 +1,10 @@
 { substitute }:
 substitute {
   src = ./xmobarrc;
-  replacements = [
-    [ "--replace" "xpm" "${./xpm}" ]
-  ];
+  patchPhase = ''
+    substituteInPlace xmobarrc \
+      --replace-fail \
+      "xpm" \
+      "${./xpm}"
+  '';
 }
